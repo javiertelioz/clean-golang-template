@@ -1,0 +1,731 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>payment: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/javiertelioz/clean_architecture/pkg/application/dto/payment/create_transaction_dto.go (100.0%)</option>
+				
+				<option value="file1">github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello/hello_use_case.go (100.0%)</option>
+				
+				<option value="file2">github.com/javiertelioz/clean_architecture/pkg/application/use_cases/payment/create_payment_use_case.go (100.0%)</option>
+				
+				<option value="file3">github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/options.go (90.0%)</option>
+				
+				<option value="file4">github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/payment.go (100.0%)</option>
+				
+				<option value="file5">github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object/amount.go (100.0%)</option>
+				
+				<option value="file6">github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object/method.go (100.0%)</option>
+				
+				<option value="file7">github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object/traceability.go (100.0%)</option>
+				
+				<option value="file8">github.com/javiertelioz/clean_architecture/pkg/domain/entities/shared/domain_error.go (50.0%)</option>
+				
+				<option value="file9">github.com/javiertelioz/clean_architecture/pkg/domain/entities/shared/validation_errors.go (28.6%)</option>
+				
+				<option value="file10">github.com/javiertelioz/clean_architecture/pkg/infrastructure/logger/zap_logger.go (64.3%)</option>
+				
+				<option value="file11">github.com/javiertelioz/clean_architecture/pkg/infrastructure/routes/hello_router.go (100.0%)</option>
+				
+				<option value="file12">github.com/javiertelioz/clean_architecture/pkg/infrastructure/routes/payments_router.go (0.0%)</option>
+				
+				<option value="file13">github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers/hello_controller.go (81.8%)</option>
+				
+				<option value="file14">github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers/payment_controller.go (0.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">no coverage</span>
+				<span class="cov1">low coverage</span>
+				<span class="cov2">*</span>
+				<span class="cov3">*</span>
+				<span class="cov4">*</span>
+				<span class="cov5">*</span>
+				<span class="cov6">*</span>
+				<span class="cov7">*</span>
+				<span class="cov8">*</span>
+				<span class="cov9">*</span>
+				<span class="cov10">high coverage</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package payment
+
+import (
+        "github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object"
+        "time"
+
+        domain "github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment"
+)
+
+type CreateTransactionDto struct {
+        UserID       string          `json:"user_id"`
+        Amount       float64         `json:"amount"`
+        Method       string          `json:"method"`
+        ReferenceID  string          `json:"reference_id"`
+        Traceability TraceabilityDto `json:"traceability"`
+}
+
+type TraceabilityDto struct {
+        BranchId   string     `json:"branch_id"`
+        Date       *time.Time `json:"date"`
+        ExternalId string     `json:"external_id"`
+        TerminalId string     `json:"terminal_id"`
+}
+
+func (dto *CreateTransactionDto) ToDomainOptions() []domain.PaymentOption <span class="cov10" title="7">{
+        opts := []domain.PaymentOption{
+                domain.WithUserID(dto.UserID),
+                domain.WithAmount(value_object.Amount(dto.Amount)),
+                domain.WithMethod(value_object.Method(dto.Method)),
+                domain.WithTraceabilityBranchID(dto.Traceability.BranchId),
+                domain.WithTraceabilityExternalID(dto.Traceability.ExternalId),
+                domain.WithTraceabilityTerminalID(dto.Traceability.TerminalId),
+        }
+
+        if dto.Traceability.Date != nil </span><span class="cov8" title="5">{
+                opts = append(opts, domain.WithTraceabilityDate(*dto.Traceability.Date))
+        }</span>
+
+        <span class="cov10" title="7">return opts</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package hello
+
+import (
+        "time"
+
+        "github.com/javiertelioz/clean_architecture/pkg/interfaces/presenters"
+)
+
+type HelloUseCase struct{}
+
+func NewHelloUseCase() *HelloUseCase <span class="cov10" title="4">{
+        return &amp;HelloUseCase{}
+}</span>
+
+func (uc *HelloUseCase) Execute(name string) presenters.HelloResponse <span class="cov10" title="4">{
+        return presenters.HelloResponse{
+                Message:   "Hello, " + name + "!",
+                Code:      200,
+                Timestamp: time.Now().UnixMilli(),
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package payment
+
+import (
+        dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/payment"
+        "github.com/javiertelioz/clean_architecture/pkg/domain/contracts/repository"
+        "github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment"
+)
+
+type CreatePaymentUseCase struct {
+        PaymentRepository repository.PaymentRepository
+}
+
+func NewCreatePaymentUseCase(paymentRepository repository.PaymentRepository) *CreatePaymentUseCase <span class="cov10" title="3">{
+        return &amp;CreatePaymentUseCase{
+                PaymentRepository: paymentRepository,
+        }
+}</span>
+
+func (uc *CreatePaymentUseCase) Execute(input *dto.CreateTransactionDto) (*payment.Payment, error) <span class="cov10" title="3">{
+        newPayment := payment.NewPayment(input.ToDomainOptions()...)
+
+        errs := newPayment.Validate()
+        if !errs.IsEmpty() </span><span class="cov1" title="1">{
+                return nil, errs
+        }</span>
+
+        <span class="cov6" title="2">createdPayment, err := uc.PaymentRepository.Save(newPayment)
+        if err != nil </span><span class="cov1" title="1">{
+                return nil, err
+        }</span>
+
+        <span class="cov1" title="1">return createdPayment, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package payment
+
+import (
+        "time"
+        
+        "github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object"
+)
+
+type PaymentOption func(*Payment)
+
+func NewPayment(opts ...PaymentOption) *Payment <span class="cov6" title="12">{
+        p := &amp;Payment{}
+        for _, opt := range opts </span><span class="cov10" title="81">{
+                opt(p)
+        }</span>
+        <span class="cov6" title="12">return p</span>
+}
+
+func WithID(id string) PaymentOption <span class="cov4" title="5">{
+        return func(p *Payment) </span><span class="cov4" title="5">{
+                p.id = id
+        }</span>
+}
+
+func WithAmount(amount value_object.Amount) PaymentOption <span class="cov6" title="12">{
+        return func(p *Payment) </span><span class="cov6" title="12">{
+                p.amount = amount
+        }</span>
+}
+
+func WithUserID(userID string) PaymentOption <span class="cov6" title="12">{
+        return func(p *Payment) </span><span class="cov6" title="12">{
+                p.userID = userID
+        }</span>
+}
+
+func WithMethod(method value_object.Method) PaymentOption <span class="cov6" title="12">{
+        return func(p *Payment) </span><span class="cov6" title="12">{
+                p.method = method
+        }</span>
+}
+
+func WithTraceability(trace value_object.Traceability) PaymentOption <span class="cov0" title="0">{
+        return func(p *Payment) </span><span class="cov0" title="0">{
+                p.traceability = trace
+        }</span>
+}
+
+func WithTraceabilityDate(date time.Time) PaymentOption <span class="cov4" title="7">{
+        return func(p *Payment) </span><span class="cov4" title="7">{
+                if p.traceability == (value_object.Traceability{}) </span><span class="cov0" title="0">{
+                        p.traceability = value_object.Traceability{}
+                }</span>
+                <span class="cov4" title="7">p.traceability.Date = &amp;date</span>
+        }
+}
+
+func WithTraceabilityBranchID(branchID string) PaymentOption <span class="cov5" title="11">{
+        return func(p *Payment) </span><span class="cov5" title="11">{
+                if p.traceability == (value_object.Traceability{}) </span><span class="cov5" title="11">{
+                        p.traceability = value_object.Traceability{}
+                }</span>
+                <span class="cov5" title="11">p.traceability.BranchID = branchID</span>
+        }
+}
+
+func WithTraceabilityExternalID(externalID string) PaymentOption <span class="cov5" title="11">{
+        return func(p *Payment) </span><span class="cov5" title="11">{
+                if p.traceability == (value_object.Traceability{}) </span><span class="cov1" title="1">{
+                        p.traceability = value_object.Traceability{}
+                }</span>
+                <span class="cov5" title="11">p.traceability.ExternalID = externalID</span>
+        }
+}
+
+func WithTraceabilityTerminalID(terminalID string) PaymentOption <span class="cov5" title="11">{
+        return func(p *Payment) </span><span class="cov5" title="11">{
+                if p.traceability == (value_object.Traceability{}) </span><span class="cov1" title="1">{
+                        p.traceability = value_object.Traceability{}
+                }</span>
+                <span class="cov5" title="11">p.traceability.TerminalID = terminalID</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package payment
+
+import (
+        "github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object"
+        "github.com/javiertelioz/clean_architecture/pkg/domain/entities/shared"
+)
+
+type Payment struct {
+        id           string
+        amount       value_object.Amount
+        userID       string
+        method       value_object.Method
+        traceability value_object.Traceability
+}
+
+func (p *Payment) GetID() string <span class="cov6" title="5">{
+        return p.id
+}</span>
+
+func (p *Payment) GetAmount() value_object.Amount <span class="cov5" title="4">{
+        return p.amount
+}</span>
+
+func (p *Payment) GetUserID() string <span class="cov5" title="4">{
+        return p.userID
+}</span>
+
+func (p *Payment) GetMethod() value_object.Method <span class="cov5" title="4">{
+        return p.method
+}</span>
+
+func (p *Payment) GetTraceability() value_object.Traceability <span class="cov10" title="14">{
+        return p.traceability
+}</span>
+
+func (p *Payment) Validate() *shared.ValidationErrors <span class="cov6" title="5">{
+        errs := &amp;shared.ValidationErrors{}
+
+        if err := value_object.ValidateAmount(p.amount); err != nil </span><span class="cov3" title="2">{
+                errs.Add(err)
+        }</span>
+        <span class="cov6" title="5">if err := value_object.ValidateMethod(p.method); err != nil </span><span class="cov3" title="2">{
+                errs.Add(err)
+        }</span>
+        <span class="cov6" title="5">if err := value_object.ValidateTraceability(p.traceability); err != nil </span><span class="cov3" title="2">{
+                errs.Add(err)
+        }</span>
+        <span class="cov6" title="5">if p.userID == "" </span><span class="cov3" title="2">{
+                errs.Add(shared.NewDomainError("UserID", "empty string", "UserID cannot be empty", "UserID is required", 3001))
+        }</span>
+
+        <span class="cov6" title="5">return errs</span>
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package value_object
+
+import "github.com/javiertelioz/clean_architecture/pkg/domain/entities/shared"
+
+type Amount float64
+
+func ValidateAmount(amount Amount) *shared.DomainError <span class="cov10" title="5">{
+        if amount &lt;= 0 </span><span class="cov4" title="2">{
+                return shared.NewDomainError("Amount", "non-positive", "Amount must be greater than 0", "Invalid amount", 3002)
+        }</span>
+        <span class="cov7" title="3">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package value_object
+
+import (
+        "strings"
+
+        "github.com/javiertelioz/clean_architecture/pkg/domain/entities/shared"
+)
+
+type Method string
+
+func ValidateMethod(method Method) *shared.DomainError <span class="cov10" title="5">{
+        if strings.TrimSpace(string(method)) == "" </span><span class="cov4" title="2">{
+                return shared.NewDomainError("Method", "empty", "Payment method is required", "Empty method value", 3003)
+        }</span>
+        <span class="cov7" title="3">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package value_object
+
+import (
+        "github.com/javiertelioz/clean_architecture/pkg/domain/entities/shared"
+        "time"
+)
+
+type Traceability struct {
+        BranchID   string
+        Date       *time.Time
+        ExternalID string
+        TerminalID string
+}
+
+func ValidateTraceability(t Traceability) *shared.DomainError <span class="cov10" title="5">{
+        if t.BranchID == "" || t.Date == nil || t.ExternalID == "" || t.TerminalID == "" </span><span class="cov4" title="2">{
+                return shared.NewDomainError("Traceability", "missing fields", "Incomplete traceability info", "All traceability fields are required", 3004)
+        }</span>
+        <span class="cov7" title="3">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package shared
+
+type DomainError struct {
+        Field       string
+        Cause       string
+        Message     string
+        Description string
+        Code        int
+}
+
+func NewDomainError(field, cause, message, description string, code int) *DomainError <span class="cov10" title="8">{
+        return &amp;DomainError{
+                Field:       field,
+                Cause:       cause,
+                Message:     message,
+                Description: description,
+                Code:        code,
+        }
+}</span>
+
+func (e *DomainError) Error() string <span class="cov0" title="0">{
+        return e.Message
+}</span>
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package shared
+
+import "strings"
+
+type ValidationErrors struct {
+        Errors []*DomainError
+}
+
+func (ve *ValidationErrors) Add(err *DomainError) <span class="cov10" title="8">{
+        ve.Errors = append(ve.Errors, err)
+}</span>
+
+func (ve *ValidationErrors) Error() string <span class="cov0" title="0">{
+        var messages []string
+        for _, err := range ve.Errors </span><span class="cov0" title="0">{
+                messages = append(messages, err.Error())
+        }</span>
+        <span class="cov0" title="0">return strings.Join(messages, ", ")</span>
+}
+
+func (ve *ValidationErrors) HasErrors() bool <span class="cov0" title="0">{
+        return len(ve.Errors) &gt; 0
+}</span>
+
+func (ve *ValidationErrors) IsEmpty() bool <span class="cov7" title="4">{
+        return len(ve.Errors) == 0
+}</span>
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package logger
+
+import (
+        "fmt"
+        "runtime"
+
+        "go.uber.org/zap"
+        "go.uber.org/zap/zapcore"
+
+        "github.com/javiertelioz/clean-architecture-go/pkg/domain/contracts/services"
+)
+
+// ZapLogger godoc
+type ZapLogger struct {
+        logger *zap.Logger
+}
+
+// NewLogger godoc
+func NewLogger() services.LoggerService <span class="cov6" title="3">{
+        config := zap.Config{
+                Encoding:         "json", // O "console" si prefieres texto plano
+                Level:            zap.NewAtomicLevelAt(zapcore.DebugLevel),
+                OutputPaths:      []string{"stdout"},
+                ErrorOutputPaths: []string{"stderr"},
+                EncoderConfig: zapcore.EncoderConfig{
+                        TimeKey:       "time",
+                        LevelKey:      "level",
+                        MessageKey:    "message",
+                        CallerKey:     "caller",
+                        StacktraceKey: "stacktrace",
+                        EncodeLevel:   zapcore.CapitalLevelEncoder,
+                        EncodeTime:    zapcore.ISO8601TimeEncoder,
+                        EncodeCaller:  zapcore.ShortCallerEncoder,
+                },
+        }
+
+        logger, err := config.Build()
+        if err != nil </span><span class="cov0" title="0">{
+                panic(fmt.Sprintf("failed to initialize zap logger: %v", err))</span>
+        }
+
+        <span class="cov6" title="3">return &amp;ZapLogger{logger: logger}</span>
+}
+
+func (z *ZapLogger) getCallerInfo() string <span class="cov10" title="6">{
+        _, file, line, ok := runtime.Caller(2) // 2 niveles arriba para obtener la llamada original
+        if !ok </span><span class="cov0" title="0">{
+                return "unknown"
+        }</span>
+        <span class="cov10" title="6">return fmt.Sprintf("%s:%d", file, line)</span>
+}
+
+func (z *ZapLogger) Trace(msg string) <span class="cov6" title="3">{
+        z.logger.Debug(msg, zap.String("loc", z.getCallerInfo()))
+}</span>
+
+func (z *ZapLogger) Debug(msg string) <span class="cov6" title="3">{
+        z.logger.Debug(msg, zap.String("loc", z.getCallerInfo()))
+}</span>
+
+func (z *ZapLogger) Info(msg string) <span class="cov0" title="0">{
+        z.logger.Info(msg, zap.String("loc", z.getCallerInfo()))
+}</span>
+
+func (z *ZapLogger) Warn(msg string) <span class="cov0" title="0">{
+        z.logger.Warn(msg, zap.String("loc", z.getCallerInfo()))
+}</span>
+
+func (z *ZapLogger) Error(msg string) <span class="cov0" title="0">{
+        z.logger.Error(msg, zap.String("loc", z.getCallerInfo()), zap.Stack("stacktrace"))
+}</span>
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package routes
+
+import (
+        "net/http"
+
+        "github.com/go-chi/chi/v5"
+
+        "github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers"
+)
+
+type HelloRoutes struct {
+        router     chi.Router
+        controller *controllers.HelloController
+}
+
+func NewHelloRoutes(controller *controllers.HelloController) *HelloRoutes <span class="cov10" title="3">{
+        router := chi.NewRouter()
+        return &amp;HelloRoutes{
+                router:     router,
+                controller: controller,
+        }
+}</span>
+
+func (h *HelloRoutes) Mount() http.Handler <span class="cov10" title="3">{
+        h.router.Get("/{name}", h.controller.HelloHandler)
+
+        return h.router
+}</span>
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package routes
+
+import (
+        "github.com/go-chi/chi/v5"
+        "github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers"
+)
+
+type PaymentRoutes struct {
+        router     chi.Router
+        controller *controllers.PaymentController
+}
+
+func NewPaymentRoutes(controller *controllers.PaymentController) *PaymentRoutes <span class="cov0" title="0">{
+        router := chi.NewRouter()
+        return &amp;PaymentRoutes{
+                router:     router,
+                controller: controller,
+        }
+}</span>
+
+func (pr *PaymentRoutes) Mount() chi.Router <span class="cov0" title="0">{
+        pr.router.Post("/", pr.controller.CreatePaymentHandler)
+        /*pr.router.Get("/", pr.controller.GetPaymentsHandler)
+        pr.router.Get("/{id}", pr.controller.GetPaymentByIdHandler)
+        pr.router.Put("/{id}", pr.controller.UpdatePaymentHandler)
+        pr.router.Delete("/{id}", pr.controller.DeletePaymentHandler)*/
+
+        return pr.router
+}</span>
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package controllers
+
+import (
+        "encoding/json"
+        "fmt"
+        "net/http"
+
+        "github.com/go-chi/chi/v5"
+
+        "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
+        "github.com/javiertelioz/clean_architecture/pkg/domain/contracts/services"
+)
+
+type HelloController struct {
+        useCase       *hello.HelloUseCase
+        loggerService services.LoggerService
+}
+
+func NewHelloController(
+        useCase *hello.HelloUseCase,
+        loggerService services.LoggerService,
+) *HelloController <span class="cov10" title="3">{
+        return &amp;HelloController{
+                useCase:       useCase,
+                loggerService: loggerService,
+        }
+}</span>
+
+// HelloHandler godoc
+//
+//        @Summary                Say Hello
+//        @Description        Say Hello
+//        @Tags                        Hello
+//        @Accept                        json
+//        @Produce                json
+//        @Param                        name                        path                string        true        "Name"                default(Joe)
+//        @Param                        Accept-Language        header                string        false        "Language"        default(en-US)
+//        @Success                200                                {object}        serializers.HelloSerializer
+//        @Router                        /api/v1/hello/{name} [get]
+func (c *HelloController) HelloHandler(w http.ResponseWriter, r *http.Request) <span class="cov10" title="3">{
+        name := chi.URLParam(r, "name")
+        output := c.useCase.Execute(name)
+
+        c.loggerService.Trace("HelloHandler executed successfully")
+        c.loggerService.Debug(fmt.Sprintf("HelloHandler executed successfully with name: %s", name))
+
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+
+        err := json.NewEncoder(w).Encode(output)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package controllers
+
+import (
+        "encoding/json"
+        "net/http"
+
+        "github.com/javiertelioz/clean_architecture/pkg/application/dto/payment"
+        usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/payment"
+        "github.com/javiertelioz/clean_architecture/pkg/interfaces/presenters"
+)
+
+type PaymentController struct {
+        createPayment *usecase.CreatePaymentUseCase
+}
+
+func NewPaymentController(createPayment *usecase.CreatePaymentUseCase) *PaymentController <span class="cov0" title="0">{
+        return &amp;PaymentController{
+                createPayment: createPayment,
+        }
+}</span>
+
+func (pc *PaymentController) CreatePaymentHandler(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        var input payment.CreateTransactionDto
+
+        if err := json.NewDecoder(r.Body).Decode(&amp;input); err != nil </span><span class="cov0" title="0">{
+                http.Error(w, "Invalid request payload", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov0" title="0">p, err := pc.createPayment.Execute(&amp;input)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, err.Error(), http.StatusUnprocessableEntity)
+                return
+        }</span>
+
+        <span class="cov0" title="0">response := presenters.PaymentResponse{
+                ID:     p.GetID(),
+                UserID: p.GetUserID(),
+                Amount: float64(p.GetAmount()),
+                Method: string(p.GetMethod()),
+                Status: "created", // puedes mapearlo de la entidad si agregas estado
+                Traceability: presenters.TraceabilityResponse{
+                        BranchID:   p.GetTraceability().BranchID,
+                        Date:       p.GetTraceability().Date,
+                        ExternalID: p.GetTraceability().ExternalID,
+                        TerminalID: p.GetTraceability().TerminalID,
+                },
+        }
+
+        w.Header().Set("Content-Type", "application/json")
+        json.NewEncoder(w).Encode(response)</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
