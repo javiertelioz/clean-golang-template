@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/javiertelioz/clean_architecture/pkg/infrastructure/repository"
 	"log"
 	"net/http"
 
@@ -9,7 +10,6 @@ import (
 
 	"github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	"github.com/javiertelioz/clean_architecture/pkg/application/use_cases/payment"
-	"github.com/javiertelioz/clean_architecture/pkg/infrastructure/database"
 	"github.com/javiertelioz/clean_architecture/pkg/infrastructure/logger"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/routes"
@@ -25,12 +25,13 @@ func main() {
 
 	// Services
 	loggerService := logger.NewLogger()
+	defer loggerService.(*logger.ZapLogger).Close()
 
 	// Uses Cases
 	helloUseCase := hello.NewHelloUseCase(loggerService)
 	helloController := controllers.NewHelloController(helloUseCase, loggerService)
 
-	repo := database.NewInMemoryPaymentRepository()
+	repo := repository.NewInMemoryPaymentRepository()
 	paymentUseCase := payment.NewCreatePaymentUseCase(repo)
 	paymentsController := controllers.NewPaymentController(paymentUseCase)
 

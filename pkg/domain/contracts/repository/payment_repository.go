@@ -6,6 +6,6 @@ import (
 
 type PaymentRepository interface {
 	Save(payment *payment.Payment) (*payment.Payment, error)
-	Approve(id string) (*payment.Payment, error)
 	Update(payment *payment.Payment) (*payment.Payment, error)
+	Approve(id string) (*payment.Payment, error)
 }
