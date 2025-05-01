@@ -2,6 +2,7 @@ package payment_test
 
 import (
 	"errors"
+	"github.com/javiertelioz/clean_architecture/test/unit/mocks/repository"
 	"testing"
 	"time"
 
@@ -11,13 +12,12 @@ import (
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/payment"
 	"github.com/javiertelioz/clean_architecture/pkg/application/use_cases/payment"
 	domain "github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment"
-	"github.com/javiertelioz/clean_architecture/test/unit/mocks"
 )
 
 type CreatePaymentUseCaseTestSuite struct {
 	suite.Suite
 	useCase    *payment.CreatePaymentUseCase
-	repository *mocks.MockPaymentRepository
+	repository *repository.MockPaymentRepository
 }
 
 func TestCreatePaymentUseCaseTestSuite(t *testing.T) {
@@ -25,7 +25,7 @@ func TestCreatePaymentUseCaseTestSuite(t *testing.T) {
 }
 
 func (suite *CreatePaymentUseCaseTestSuite) SetupTest() {
-	suite.repository = mocks.NewMockPaymentRepository()
+	suite.repository = repository.NewMockPaymentRepository()
 	suite.useCase = payment.NewCreatePaymentUseCase(suite.repository)
 }
 

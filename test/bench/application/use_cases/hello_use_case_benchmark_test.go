@@ -6,7 +6,7 @@ import (
 
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
 	usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
-	"github.com/javiertelioz/clean_architecture/test/unit/mocks/service"
+	"github.com/javiertelioz/clean_architecture/test/unit/mocks/services"
 )
 
 func BenchmarkHelloUseCase(b *testing.B) {
@@ -16,7 +16,7 @@ func BenchmarkHelloUseCase(b *testing.B) {
 	heapBefore := stats.HeapAlloc
 
 	// Setup
-	loggerService := service.NewMockLoggerService()
+	loggerService := services.NewMockLoggerService()
 	uc := usecase.NewHelloUseCase(loggerService)
 	input := &dto.HelloInput{
 		Name: "Joe",

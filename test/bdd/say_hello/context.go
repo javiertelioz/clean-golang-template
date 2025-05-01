@@ -1,7 +1,6 @@
 package say_hello
 
 import (
-	"github.com/javiertelioz/clean_architecture/test/unit/mocks/service"
 	"net/http/httptest"
 
 	"github.com/cucumber/godog"
@@ -10,6 +9,7 @@ import (
 	"github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/routes"
+	"github.com/javiertelioz/clean_architecture/test/unit/mocks/services"
 )
 
 type HelloFeatureContext struct {
@@ -19,7 +19,7 @@ type HelloFeatureContext struct {
 }
 
 func NewHelloFeatureContext() *HelloFeatureContext {
-	loggerService := service.NewMockLoggerService()
+	loggerService := services.NewMockLoggerService()
 	helloUseCase := hello.NewHelloUseCase(loggerService)
 	helloController := controllers.NewHelloController(helloUseCase, loggerService)
 

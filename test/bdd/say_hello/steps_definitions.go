@@ -3,10 +3,11 @@ package say_hello
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/javiertelioz/clean_architecture/pkg/interfaces/serializers"
 	"io"
 	"net/http"
 	"net/http/httptest"
+
+	"github.com/javiertelioz/clean_architecture/pkg/interfaces/serializers"
 )
 
 func (ctx *HelloFeatureContext) iSendAGETRequestTo(path string) error {
