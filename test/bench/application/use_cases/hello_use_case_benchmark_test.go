@@ -1,4 +1,4 @@
-package bench
+package use_cases
 
 import (
 	"runtime"
@@ -6,6 +6,7 @@ import (
 
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
 	usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
+	"github.com/javiertelioz/clean_architecture/test/unit/mocks/service"
 )
 
 func BenchmarkHelloUseCase(b *testing.B) {
@@ -15,7 +16,8 @@ func BenchmarkHelloUseCase(b *testing.B) {
 	heapBefore := stats.HeapAlloc
 
 	// Setup
-	uc := usecase.NewHelloUseCase()
+	loggerService := service.NewMockLoggerService()
+	uc := usecase.NewHelloUseCase(loggerService)
 	input := &dto.HelloInput{
 		Name: "Joe",
 	}

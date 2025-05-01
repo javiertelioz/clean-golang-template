@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/javiertelioz/clean-architecture-go/pkg/domain/contracts/services"
+	"github.com/javiertelioz/clean_architecture/pkg/domain/contracts/services"
 )
 
 // ZapLogger godoc

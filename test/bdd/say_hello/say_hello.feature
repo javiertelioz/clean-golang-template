@@ -11,7 +11,8 @@ Feature: Hello message
     And the response should contain "<message>"
 
     Examples:
-      | name   | status_code | message          |
-      | John   | 200         | Hello, John!     |
-      | Mary   | 200         | Hello, Mary!     |
-      | Robert | 200         | Hello, Robert!   |
+      | name   | status_code | message                          |
+      | John   | 200         | Hello, John!                     |
+      | Mary   | 200         | Hello, Mary!                     |
+      | Robert | 200         | Hello, Robert!                   |
+      | %20    | 400         | Invalid input or execution error |

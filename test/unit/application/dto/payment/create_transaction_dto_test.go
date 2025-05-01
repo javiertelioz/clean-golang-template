@@ -1,7 +1,6 @@
 package payment_test
 
 import (
-	"github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object"
 	"testing"
 	"time"
 
@@ -9,6 +8,7 @@ import (
 
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/payment"
 	domain "github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment"
+	"github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object"
 )
 
 type CreateTransactionDtoTestSuite struct {

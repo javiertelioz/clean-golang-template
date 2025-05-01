@@ -1,16 +1,15 @@
 package controllers
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
-	"github.com/javiertelioz/clean_architecture/pkg/interfaces/serializers"
+	"github.com/go-chi/chi/v5"
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
-
+	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
 	usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	"github.com/javiertelioz/clean_architecture/pkg/domain/contracts/services"
+	"github.com/javiertelioz/clean_architecture/pkg/interfaces/presenters"
+	"github.com/javiertelioz/clean_architecture/pkg/interfaces/serializers"
 )
 
 type HelloController struct {
@@ -40,28 +39,21 @@ func NewHelloController(
 //	@Success		200				{object}	serializers.HelloSerializer
 //	@Router			/api/v1/hello/{name} [get]
 func (c *HelloController) HelloHandler(w http.ResponseWriter, r *http.Request) {
-	input := hello.HelloInput{
+	input := dto.HelloInput{
 		Name: chi.URLParam(r, "name"),
 	}
 
-	result, err := c.useCase.Execute(&input)
+	output, err := c.useCase.Execute(&input)
 	if err != nil {
 		c.loggerService.Error(fmt.Sprintf("Failed to execute HelloUseCase: %s", err))
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		presenters.JSONError(w, http.StatusBadRequest, "Invalid input or execution error", 1001, err.Error())
 		return
 	}
 
-	output := serializers.NewHelloSerializer(result.SayHello())
+	response := serializers.NewHelloSerializer(output)
 
 	c.loggerService.Trace("HelloHandler executed successfully")
 	c.loggerService.Debug(fmt.Sprintf("HelloHandler executed successfully with name: %s", input))
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-
-	err = json.NewEncoder(w).Encode(output)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	presenters.JSON(w, http.StatusOK, response)
 }

@@ -22,7 +22,6 @@ test: ## Clear the test cache and then execute all project tests with coverage.
 	@echo "🧪 Test Completed"
 .PHONY: test
 
-
 coverage: ## Generate and visualize a test coverage report in HTML format.
 	@mkdir -p coverage
 	@go clean -testcache
@@ -33,7 +32,7 @@ coverage: ## Generate and visualize a test coverage report in HTML format.
 .PHONY: coverage
 
 bench: ## Run the benchmarks
-	go test -bench=. ./...
+	go test -bench=. -benchmem -benchtime=5s -count=5 ./test/bench/... -v
 .PHONY: bench
 
 linter: ## Run the golangci-lint on the project source code to detect style issues or errors.

@@ -3,11 +3,10 @@ package say_hello
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/javiertelioz/clean_architecture/pkg/interfaces/serializers"
 	"io"
 	"net/http"
 	"net/http/httptest"
-
-	"github.com/javiertelioz/clean_architecture/pkg/interfaces/presenters"
 )
 
 func (ctx *HelloFeatureContext) iSendAGETRequestTo(path string) error {
@@ -23,6 +22,7 @@ func (ctx *HelloFeatureContext) iSendAGETRequestTo(path string) error {
 	if err != nil {
 		return err
 	}
+
 	ctx.response = string(body)
 	return nil
 }
@@ -35,7 +35,7 @@ func (ctx *HelloFeatureContext) iShouldGetStatusCode(expectedCode int) error {
 }
 
 func (ctx *HelloFeatureContext) theResponseShouldContain(expectedMessage string) error {
-	var response presenters.HelloResponse
+	var response serializers.HelloSerializer
 	if err := json.Unmarshal([]byte(ctx.response), &response); err != nil {
 		return err
 	}
@@ -43,5 +43,6 @@ func (ctx *HelloFeatureContext) theResponseShouldContain(expectedMessage string)
 	if response.Message != expectedMessage {
 		return fmt.Errorf("expected message %q but got %q", expectedMessage, response.Message)
 	}
+
 	return nil
 }
