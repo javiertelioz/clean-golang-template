@@ -27,7 +27,7 @@ func main() {
 	loggerService := logger.NewLogger()
 
 	// Uses Cases
-	helloUseCase := hello.NewHelloUseCase()
+	helloUseCase := hello.NewHelloUseCase(loggerService)
 	helloController := controllers.NewHelloController(helloUseCase, loggerService)
 
 	repo := database.NewInMemoryPaymentRepository()

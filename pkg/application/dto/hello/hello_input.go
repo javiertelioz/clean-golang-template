@@ -7,9 +7,7 @@ type HelloInput struct {
 }
 
 func (dto *HelloInput) ToDomainOptions() []domain.HelloOption {
-	opts := []domain.HelloOption{
+	return []domain.HelloOption{
 		domain.WithName(dto.Name),
 	}
-
-	return opts
 }

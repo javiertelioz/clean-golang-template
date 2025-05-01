@@ -1,15 +1,15 @@
 package say_hello
 
 import (
-	"github.com/javiertelioz/clean_architecture/pkg/interfaces/routes"
+	"github.com/javiertelioz/clean_architecture/test/unit/mocks/service"
 	"net/http/httptest"
 
 	"github.com/cucumber/godog"
 	"github.com/go-chi/chi/v5"
 
 	"github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
-	"github.com/javiertelioz/clean_architecture/pkg/infrastructure/logger"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers"
+	"github.com/javiertelioz/clean_architecture/pkg/interfaces/routes"
 )
 
 type HelloFeatureContext struct {
@@ -19,8 +19,8 @@ type HelloFeatureContext struct {
 }
 
 func NewHelloFeatureContext() *HelloFeatureContext {
-	loggerService := logger.NewLogger()
-	helloUseCase := hello.NewHelloUseCase()
+	loggerService := service.NewMockLoggerService()
+	helloUseCase := hello.NewHelloUseCase(loggerService)
 	helloController := controllers.NewHelloController(helloUseCase, loggerService)
 
 	router := chi.NewRouter()

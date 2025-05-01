@@ -1,6 +1,8 @@
 package serializers
 
-import "time"
+import (
+	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
+)
 
 // HelloSerializer godoc
 // @Description Hello information
@@ -8,14 +10,12 @@ import "time"
 // swagger:model HelloSerializer
 type HelloSerializer struct {
 	Message   string `json:"message" example:"Joe"`
-	Code      int    `json:"code"`
 	Timestamp int64  `json:"timestamp"`
 }
 
-func NewHelloSerializer(message string) *HelloSerializer {
+func NewHelloSerializer(output *dto.HelloOutput) *HelloSerializer {
 	return &HelloSerializer{
-		Message:   message,
-		Code:      200,
-		Timestamp: time.Now().UnixMilli(),
+		Message:   output.Message,
+		Timestamp: output.Timestamp,
 	}
 }

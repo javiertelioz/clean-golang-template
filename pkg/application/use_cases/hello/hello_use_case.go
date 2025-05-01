@@ -2,27 +2,32 @@ package hello
 
 import (
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
+	"github.com/javiertelioz/clean_architecture/pkg/domain/contracts/services"
 	"github.com/javiertelioz/clean_architecture/pkg/domain/entities/hello"
 )
 
-type HelloUseCase struct{}
-
-func NewHelloUseCase() *HelloUseCase {
-	return &HelloUseCase{}
+type HelloUseCase struct {
+	loggerService services.LoggerService
 }
 
-func (uc *HelloUseCase) Execute(input *dto.HelloInput) (*hello.Hello, error) {
-	newHello := hello.NewHello(input.ToDomainOptions()...)
+func NewHelloUseCase(loggerService services.LoggerService) *HelloUseCase {
+	return &HelloUseCase{
+		loggerService: loggerService,
+	}
+}
 
-	if errs := newHello.Validate(); errs.HasErrors() {
+func (uc *HelloUseCase) Execute(input *dto.HelloInput) (*dto.HelloOutput, error) {
+	h := hello.NewHello(input.ToDomainOptions()...)
+
+	if errs := h.Validate(); errs.HasErrors() {
+		// uc.loggerService.Error(fmt.Sprintf("Invalid input: %s", errs))
 		return nil, errs
 	}
 
-	return newHello, nil
+	output := &dto.HelloOutput{
+		Message:   h.SayHello(),
+		Timestamp: h.GetTimestamp(),
+	}
 
-	/*return presenters.HelloResponse{
-		Message:   "Hello, " + name + "!",
-		Code:      200,
-		Timestamp: time.Now().UnixMilli(),
-	}*/
+	return output, nil
 }
