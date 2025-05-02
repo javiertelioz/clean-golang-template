@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/javiertelioz/clean_architecture/test/mocks/services"
 	"net/http"
 	"net/http/httptest"
 	"runtime"
@@ -11,7 +12,6 @@ import (
 
 	usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	controller "github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers"
-	"github.com/javiertelioz/clean_architecture/test/unit/mocks/services"
 )
 
 func BenchmarkHelloController(b *testing.B) {

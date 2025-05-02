@@ -2,7 +2,7 @@ package payment_test
 
 import (
 	"errors"
-	"github.com/javiertelioz/clean_architecture/test/unit/mocks/repository"
+	"github.com/javiertelioz/clean_architecture/test/mocks/repository"
 	"testing"
 	"time"
 

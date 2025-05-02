@@ -2,6 +2,7 @@ package hello_test
 
 import (
 	"fmt"
+	"github.com/javiertelioz/clean_architecture/test/mocks/services"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -9,7 +10,6 @@ import (
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
 	usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	contracts "github.com/javiertelioz/clean_architecture/pkg/domain/contracts/services"
-	"github.com/javiertelioz/clean_architecture/test/unit/mocks/services"
 )
 
 type HelloUseCaseTestSuite struct {

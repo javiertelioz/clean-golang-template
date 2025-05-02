@@ -1,6 +1,7 @@
 package say_hello
 
 import (
+	"github.com/javiertelioz/clean_architecture/test/mocks/services"
 	"net/http/httptest"
 
 	"github.com/cucumber/godog"
@@ -9,7 +10,6 @@ import (
 	"github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/routes"
-	"github.com/javiertelioz/clean_architecture/test/unit/mocks/services"
 )
 
 type HelloFeatureContext struct {

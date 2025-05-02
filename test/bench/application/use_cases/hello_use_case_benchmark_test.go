@@ -1,12 +1,12 @@
 package use_cases
 
 import (
+	"github.com/javiertelioz/clean_architecture/test/mocks/services"
 	"runtime"
 	"testing"
 
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
 	usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
-	"github.com/javiertelioz/clean_architecture/test/unit/mocks/services"
 )
 
 func BenchmarkHelloUseCase(b *testing.B) {
