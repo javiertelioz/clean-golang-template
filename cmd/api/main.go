@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/javiertelioz/clean_architecture/pkg/infrastructure/messaging"
 	"log"
 	"net/http"
 
@@ -27,11 +28,12 @@ func main() {
 	r.Mount("/debug", middleware.Profiler())
 
 	// Services
+	publisherService := messaging.NewAsyncEventPublisher()
 	loggerService := logger.NewLogger()
 	defer loggerService.(*logger.ZapLogger).Close()
 
 	// Uses Cases
-	helloUseCase := hello.NewHelloUseCase(loggerService)
+	helloUseCase := hello.NewHelloUseCase(publisherService, loggerService)
 	helloController := controllers.NewHelloController(helloUseCase, loggerService)
 
 	repo := repository.NewInMemoryPaymentRepository()

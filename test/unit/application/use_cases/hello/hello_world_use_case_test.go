@@ -2,7 +2,6 @@ package hello_test
 
 import (
 	"fmt"
-	"github.com/javiertelioz/clean_architecture/test/mocks/services"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
@@ -10,12 +9,14 @@ import (
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
 	usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	contracts "github.com/javiertelioz/clean_architecture/pkg/domain/contracts/services"
+	"github.com/javiertelioz/clean_architecture/test/mocks/services"
 )
 
 type HelloUseCaseTestSuite struct {
 	suite.Suite
-	useCase       *usecase.HelloUseCase
-	loggerService contracts.LoggerService
+	useCase          *usecase.HelloUseCase
+	publisherService contracts.EventPublisher
+	loggerService    contracts.LoggerService
 }
 
 func TestHelloUseCaseTestSuite(t *testing.T) {
@@ -28,7 +29,8 @@ func (suite *HelloUseCaseTestSuite) SetupTest() {
 
 func (suite *HelloUseCaseTestSuite) givenAHelloUseCase() {
 	suite.loggerService = services.NewMockLoggerService()
-	suite.useCase = usecase.NewHelloUseCase(suite.loggerService)
+	suite.publisherService = services.NewMockEventPublisher()
+	suite.useCase = usecase.NewHelloUseCase(suite.publisherService, suite.loggerService)
 }
 
 func (suite *HelloUseCaseTestSuite) givenValidInput() *dto.HelloInput {
