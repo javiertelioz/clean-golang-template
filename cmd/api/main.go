@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/javiertelioz/clean_architecture/pkg/infrastructure/repository"
 	"log"
 	"net/http"
 
@@ -11,6 +10,7 @@ import (
 	"github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	"github.com/javiertelioz/clean_architecture/pkg/application/use_cases/payment"
 	"github.com/javiertelioz/clean_architecture/pkg/infrastructure/logger"
+	"github.com/javiertelioz/clean_architecture/pkg/infrastructure/repository"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/controllers"
 	"github.com/javiertelioz/clean_architecture/pkg/interfaces/routes"
 )
@@ -22,6 +22,9 @@ func main() {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+	r.Use(middleware.Heartbeat("/ping"))
+
+	r.Mount("/debug", middleware.Profiler())
 
 	// Services
 	loggerService := logger.NewLogger()
