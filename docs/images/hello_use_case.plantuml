@@ -1,0 +1,78 @@
+@startuml Clean Architecture Flow
+
+skinparam componentStyle uml2
+skinparam linetype ortho
+
+actor Client
+component "Router Layer" {
+    [HelloRoutes]
+    [PaymentRoutes]
+}
+
+component "Controller Layer" {
+    [HelloController]
+    [PaymentController]
+}
+
+component "DTO Layer" {
+    [HelloDTO]
+    [PaymentDTO]
+}
+
+component "Use Case Layer" {
+    [HelloUseCase]
+    [PaymentUseCase]
+}
+
+component "Repository Layer" {
+    [PaymentRepository]
+}
+
+database "Storage" {
+    [InMemoryStorage]
+}
+
+Client --> [HelloRoutes]: HTTP Request
+Client --> [PaymentRoutes]: HTTP Request
+
+[HelloRoutes] --> [HelloController]: Request
+[PaymentRoutes] --> [PaymentController]: Request
+
+[HelloController] ..> [HelloDTO]: uses
+[PaymentController] ..> [PaymentDTO]: uses
+
+[HelloController] --> [HelloUseCase]: Execute
+[PaymentController] --> [PaymentUseCase]: Execute
+
+[PaymentUseCase] --> [PaymentRepository]: Save/Get
+[PaymentRepository] --> [InMemoryStorage]: Store
+
+note right of [HelloRoutes]
+  GET /api/v1/hello/{name}
+end note
+
+note right of [PaymentRoutes]
+  POST /api/v1/payments
+end note
+
+note right of [HelloDTO]
+  HelloRequest {
+    name: string
+  }
+  HelloResponse {
+    message: string
+  }
+end note
+
+note right of [PaymentDTO]
+  PaymentRequest {
+    amount: float64
+    currency: string
+  }
+  PaymentResponse {
+    id: string
+    status: string
+  }
+end note
+
+@enduml
