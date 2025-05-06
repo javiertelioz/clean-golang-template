@@ -70,6 +70,11 @@ func (suite *HelloUseCaseTestSuite) TestExecute_WithValidInput() {
 
 	// Then
 	suite.thenExpectValidResult(result, err, fmt.Sprintf("Hello, %s!", input.Name))
+
+	// Also check the event was published
+	mockPublisher := suite.publisherService.(*services.MockEventPublisher)
+	suite.Len(mockPublisher.GetPublishedEvents(), 1)
+	suite.Equal("HelloGreetedWasSuccessful", mockPublisher.GetPublishedEvents()[0].EventName())
 }
 
 func (suite *HelloUseCaseTestSuite) TestExecute_WithInvalidInput() {
@@ -81,4 +86,8 @@ func (suite *HelloUseCaseTestSuite) TestExecute_WithInvalidInput() {
 
 	// Then
 	suite.thenExpectError(result, err)
+
+	// Should not publish anything
+	mockPublisher := suite.publisherService.(*services.MockEventPublisher)
+	suite.Len(mockPublisher.GetPublishedEvents(), 0)
 }
