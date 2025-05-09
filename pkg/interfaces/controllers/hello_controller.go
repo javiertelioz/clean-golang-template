@@ -2,9 +2,10 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/go-chi/chi/v5"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
+	
 	dto "github.com/javiertelioz/clean_architecture/pkg/application/dto/hello"
 	usecase "github.com/javiertelioz/clean_architecture/pkg/application/use_cases/hello"
 	"github.com/javiertelioz/clean_architecture/pkg/domain/contracts/services"

@@ -20,7 +20,7 @@ func NewPaymentController(createPayment *usecase.CreatePaymentUseCase) *PaymentC
 }
 
 func (pc *PaymentController) CreatePaymentHandler(w http.ResponseWriter, r *http.Request) {
-	var input payment.CreateTransactionDto
+	var input payment.CreateTransactionInput
 
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)

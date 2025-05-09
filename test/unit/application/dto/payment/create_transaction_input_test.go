@@ -11,18 +11,18 @@ import (
 	"github.com/javiertelioz/clean_architecture/pkg/domain/entities/payment/value_object"
 )
 
-type CreateTransactionDtoTestSuite struct {
+type CreateTransactionInputTestSuite struct {
 	suite.Suite
 }
 
 func TestCreateTransactionDtoTestSuite(t *testing.T) {
-	suite.Run(t, new(CreateTransactionDtoTestSuite))
+	suite.Run(t, new(CreateTransactionInputTestSuite))
 }
 
-func (suite *CreateTransactionDtoTestSuite) givenValidDTO() *dto.CreateTransactionDto {
+func (suite *CreateTransactionInputTestSuite) givenValidDTO() *dto.CreateTransactionInput {
 	now := time.Now()
 
-	return &dto.CreateTransactionDto{
+	return &dto.CreateTransactionInput{
 		UserID:      "user-001",
 		Amount:      99.99,
 		Method:      "card",
@@ -36,8 +36,8 @@ func (suite *CreateTransactionDtoTestSuite) givenValidDTO() *dto.CreateTransacti
 	}
 }
 
-func (suite *CreateTransactionDtoTestSuite) givenDTOWithoutDate() *dto.CreateTransactionDto {
-	return &dto.CreateTransactionDto{
+func (suite *CreateTransactionInputTestSuite) givenDTOWithoutDate() *dto.CreateTransactionInput {
+	return &dto.CreateTransactionInput{
 		UserID:      "user-001",
 		Amount:      99.99,
 		Method:      "card",
@@ -51,11 +51,11 @@ func (suite *CreateTransactionDtoTestSuite) givenDTOWithoutDate() *dto.CreateTra
 	}
 }
 
-func (suite *CreateTransactionDtoTestSuite) whenConvertingToDomainOptions(input *dto.CreateTransactionDto) *domain.Payment {
+func (suite *CreateTransactionInputTestSuite) whenConvertingToDomainOptions(input *dto.CreateTransactionInput) *domain.Payment {
 	return domain.NewPayment(input.ToDomainOptions()...)
 }
 
-func (suite *CreateTransactionDtoTestSuite) thenExpectFieldsToMatch(p *domain.Payment) {
+func (suite *CreateTransactionInputTestSuite) thenExpectFieldsToMatch(p *domain.Payment) {
 	suite.Equal("user-001", p.GetUserID())
 	suite.Equal(value_object.Amount(99.99), p.GetAmount())
 	suite.Equal(value_object.Method("card"), p.GetMethod())
@@ -65,11 +65,11 @@ func (suite *CreateTransactionDtoTestSuite) thenExpectFieldsToMatch(p *domain.Pa
 	suite.NotNil(p.GetTraceability().Date)
 }
 
-func (suite *CreateTransactionDtoTestSuite) thenExpectDateToBeNil(p *domain.Payment) {
+func (suite *CreateTransactionInputTestSuite) thenExpectDateToBeNil(p *domain.Payment) {
 	suite.Nil(p.GetTraceability().Date)
 }
 
-func (suite *CreateTransactionDtoTestSuite) TestToDomainOptions_WithValidDate() {
+func (suite *CreateTransactionInputTestSuite) TestToDomainOptions_WithValidDate() {
 	// Given
 	dto := suite.givenValidDTO()
 
@@ -80,7 +80,7 @@ func (suite *CreateTransactionDtoTestSuite) TestToDomainOptions_WithValidDate() 
 	suite.thenExpectFieldsToMatch(payment)
 }
 
-func (suite *CreateTransactionDtoTestSuite) TestToDomainOptions_WithoutDate() {
+func (suite *CreateTransactionInputTestSuite) TestToDomainOptions_WithoutDate() {
 	// Given
 	dto := suite.givenDTOWithoutDate()
 

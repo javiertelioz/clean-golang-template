@@ -26,7 +26,6 @@ func (uc *HelloUseCase) Execute(input *dto.HelloInput) (*dto.HelloOutput, error)
 	h := hello.NewHello(input.ToDomainOptions()...)
 
 	if errs := h.Validate(); errs.HasErrors() {
-		// uc.loggerService.Error(fmt.Sprintf("Invalid input: %s", errs))
 		return nil, errs
 	}
 

@@ -29,10 +29,10 @@ func (suite *CreatePaymentUseCaseTestSuite) SetupTest() {
 	suite.useCase = payment.NewCreatePaymentUseCase(suite.repository)
 }
 
-func (suite *CreatePaymentUseCaseTestSuite) givenValidDTO() *dto.CreateTransactionDto {
+func (suite *CreatePaymentUseCaseTestSuite) givenValidDTO() *dto.CreateTransactionInput {
 	now := time.Now()
 
-	return &dto.CreateTransactionDto{
+	return &dto.CreateTransactionInput{
 		UserID:      "user-001",
 		Amount:      250.0,
 		Method:      "debit_card",
@@ -46,8 +46,8 @@ func (suite *CreatePaymentUseCaseTestSuite) givenValidDTO() *dto.CreateTransacti
 	}
 }
 
-func (suite *CreatePaymentUseCaseTestSuite) givenInvalidDTO() *dto.CreateTransactionDto {
-	return &dto.CreateTransactionDto{
+func (suite *CreatePaymentUseCaseTestSuite) givenInvalidDTO() *dto.CreateTransactionInput {
+	return &dto.CreateTransactionInput{
 		UserID: "",
 		Amount: 0,
 		Method: "",
@@ -60,7 +60,7 @@ func (suite *CreatePaymentUseCaseTestSuite) givenInvalidDTO() *dto.CreateTransac
 	}
 }
 
-func (suite *CreatePaymentUseCaseTestSuite) whenExecuting(input *dto.CreateTransactionDto) (*domain.Payment, error) {
+func (suite *CreatePaymentUseCaseTestSuite) whenExecuting(input *dto.CreateTransactionInput) (*domain.Payment, error) {
 	return suite.useCase.Execute(input)
 }
 

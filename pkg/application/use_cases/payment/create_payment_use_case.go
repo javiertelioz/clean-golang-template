@@ -16,7 +16,7 @@ func NewCreatePaymentUseCase(paymentRepository repository.PaymentRepository) *Cr
 	}
 }
 
-func (uc *CreatePaymentUseCase) Execute(input *dto.CreateTransactionDto) (*payment.Payment, error) {
+func (uc *CreatePaymentUseCase) Execute(input *dto.CreateTransactionInput) (*payment.Payment, error) {
 	newPayment := payment.NewPayment(input.ToDomainOptions()...)
 
 	errs := newPayment.Validate()

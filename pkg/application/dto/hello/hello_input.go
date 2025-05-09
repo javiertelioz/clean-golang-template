@@ -6,8 +6,8 @@ type HelloInput struct {
 	Name string
 }
 
-func (dto *HelloInput) ToDomainOptions() []domain.HelloOption {
+func (input *HelloInput) ToDomainOptions() []domain.HelloOption {
 	return []domain.HelloOption{
-		domain.WithName(dto.Name),
+		domain.WithName(input.Name),
 	}
 }
